@@ -4,27 +4,29 @@ import Link from 'next/link';
 
 interface Message { role: 'user' | 'assistant'; content: string; }
 
-const suggestions = ['Xe tôi cần bảo dưỡng khi nào?', 'Chi phí thay lốp bao nhiêu?', 'Xe kêu tiếng lạ phải làm gì?', 'Bảo dưỡng xe định kỳ gồm những gì?'];
+const suggestions = [
+  'Xe toi can bao duong khi nao?',
+  'Chi phi thay lop bao nhieu?',
+  'Xe keu tieng la phai lam gi?',
+  'Bao duong xe dinh ky gom nhung gi?'
+];
 
 const autoReply = (q: string): string => {
   const lower = q.toLowerCase();
-  if (lower.includes('bảo dưỡng') || lower.includes('bao duong')) 
-    return 'Xe thường cần bảo dưỡng mỗi 5.000-10.000km hoặc 3-6 tháng một lần. CARDIY có dịch vụ bảo dưỡng cấp 1-4 tại nhà bạn, đặt lịch chỉ 30 giây! 🔧';
-  if (lower.includes('lốp') || lower.includes('lop'))
-    return 'Thay 4 lốp xe trung bình từ 1.6-3.2 triệu tùy loại xe và thương hiệu. CARDIY hỗ trợ thay lốp tại nhà với giá minh bạch! 🛞';
-  if (lower.includes('kêu') || lower.includes('tiếng'))
-    return 'Nếu xe kêu tiếng lạ, đây có thể là dấu hiệu của hệ thống phanh, trục lái hoặc động cơ cần kiểm tra. Hãy đặt lịch kiểm tra OBD2 ngay! ⚠️';
-  if (lower.includes('giá') || lower.includes('chi phí'))
-    return 'Bảo dưỡng cấp 1: 350K-500K, Cấp 2: 500K-800K, Cấp 3: 800K-1.2M. Rửa xe từ 80K. Xem báo giá chi tiết tại mục Báo giá! 💰';
-  return 'Cảm ơn câu hỏi của bạn! Tôi là AI Trợ Lý CARDIY. Để được tư vấn chi tiết hơn, bạn có thể gọi hotline 1900 1234 hoặc đặt lịch ngay trên app! 🤖';
+  if (lower.includes('bao duong') || lower.includes('bảo dưỡng'))
+    return 'Xe thuong can bao duong moi 5.000-10.000km hoac 3-6 thang mot lan. CARDIY co dich vu bao duong cap 1-4 tai nha ban! Dat lich chi 30 giay! 🔧';
+  if (lower.includes('lop') || lower.includes('lốp'))
+    return 'Thay 4 lop xe trung binh tu 1.6-3.2 trieu tuy loai xe va thuong hieu. CARDIY ho tro thay lop tai nha voi gia minh bach! 🛞';
+  if (lower.includes('keu') || lower.includes('tieng'))
+    return 'Neu xe keu tieng la, day co the la dau hieu cua he thong phanh, truc lai hoac dong co can kiem tra. Hay dat lich kiem tra OBD2 ngay! ⚠️';
+  if (lower.includes('gia') || lower.includes('chi phi'))
+    return 'Bao duong cap 1: 350K-500K, Cap 2: 500K-800K, Cap 3: 800K-1.2M. Rua xe tu 80K. Xem bao gia chi tiet tai muc Bao gia! 💰';
+  return 'Cam on cau hoi cua ban! Toi la AI Tro Ly CARDIY. De duoc tu van chi tiet hon, ban co the goi hotline 1900 1234 hoac dat lich ngay tren app! 🤖';
 };
 
 export default function AssistantPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Xin chào! Tôi là AI Trợ Lý CARDIY 🤖
-Tôi có thể giúp bạn về: bảo dưỡng xe, báo giá, đặt lịch và tư vấn kỹ thuật.
-Bạn cần hỏi gì?' }
-  ]);
+  const initMsg: Message = { role: 'assistant', content: 'Xin chao! Toi la AI Tro Ly CARDIY 🤖 Toi co the giup ban ve: bao duong xe, bao gia, dat lich va tu van ky thuat. Ban can hoi gi?' };
+  const [messages, setMessages] = useState<Message[]>([initMsg]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
@@ -49,10 +51,10 @@ Bạn cần hỏi gì?' }
           <Link href="/" className="w-10 h-10 bg-slate-700 rounded-xl flex items-center justify-center text-white text-lg">←</Link>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-white font-bold text-xl">AI Trợ Lý CARDIY</h1>
+              <h1 className="text-white font-bold text-xl">AI Tro Ly CARDIY</h1>
               <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">AI</span>
             </div>
-            <p className="text-slate-400 text-sm">Powered by Claude AI · Luôn sẵn sàng</p>
+            <p className="text-slate-400 text-sm">Powered by Claude AI</p>
           </div>
           <div className="w-3 h-3 bg-green-500 rounded-full pulse-dot"></div>
         </div>
@@ -62,7 +64,7 @@ Bạn cần hỏi gì?' }
         {messages.map((m, i) => (
           <div key={i} className={`flex mb-4 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             {m.role === 'assistant' && <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center mr-2 flex-shrink-0 text-sm">🤖</div>}
-            <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm whitespace-pre-wrap ${m.role === 'user' ? 'bg-amber-400 text-black rounded-tr-sm' : 'bg-[#1E293B] text-slate-300 border border-slate-700 rounded-tl-sm'}`}>
+            <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm ${m.role === 'user' ? 'bg-amber-400 text-black rounded-tr-sm' : 'bg-[#1E293B] text-slate-300 border border-slate-700 rounded-tl-sm'}`}>
               {m.content}
             </div>
           </div>
@@ -72,7 +74,9 @@ Bạn cần hỏi gì?' }
             <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center mr-2 text-sm">🤖</div>
             <div className="bg-[#1E293B] border border-slate-700 px-4 py-3 rounded-2xl rounded-tl-sm">
               <div className="flex gap-1">
-                {[0,1,2].map(i => <div key={i} className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: `${i*0.15}s`}}></div>)}
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay:'0.15s'}}></div>
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay:'0.3s'}}></div>
               </div>
             </div>
           </div>
@@ -89,7 +93,7 @@ Bạn cần hỏi gì?' }
           ))}
         </div>
         <div className="flex gap-2 bg-[#1E293B] border border-slate-700 rounded-2xl p-2">
-          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Hỏi về xe của bạn..." className="flex-1 bg-transparent text-white text-sm outline-none px-2 placeholder-slate-400" />
+          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Hoi ve xe cua ban..." className="flex-1 bg-transparent text-white text-sm outline-none px-2 placeholder-slate-400" />
           <button onClick={() => send()} disabled={!input.trim() || loading} className="w-10 h-10 bg-amber-400 disabled:opacity-40 rounded-xl flex items-center justify-center text-black font-bold flex-shrink-0">→</button>
         </div>
       </div>
