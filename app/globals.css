@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; background: #0F172A; color: #F1F5F9; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 2px; }
+.spinner { width: 40px; height: 40px; border: 3px solid #334155; border-top-color: #F59E0B; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-primary { background: linear-gradient(135deg, #F59E0B, #D97706); color: #0F172A; font-weight: 700; padding: 14px 24px; border-radius: 12px; border: none; cursor: pointer; font-size: 16px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(245,158,11,0.4); }
+.input-field { background: #334155; border: 1px solid #475569; border-radius: 12px; padding: 14px 16px; color: #F1F5F9; font-size: 16px; width: 100%; outline: none; transition: border-color 0.2s; }
+.input-field:focus { border-color: #F59E0B; }
+.input-field::placeholder { color: #64748B; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1E293B; border-top: 1px solid #334155; z-index: 50; padding-bottom: env(safe-area-inset-bottom); }
+.pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
